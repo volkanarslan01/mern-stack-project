@@ -3,12 +3,13 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 const mongoose = require("mongoose");
-
+bodyParser = require("body-parser");
 // ! files
 const workoutRoutes = require("./Routes/workout.js");
 // ? express app
 const app = express();
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 //! middleware
 app.use((req, res, next) => {
   next();
@@ -21,7 +22,6 @@ app.use((req, res, next) => {
 app.use("/api/workout", workoutRoutes);
 
 // * Connect to MongoDB
-
 mongoose
   .connect(process.env.MONGO_DB)
   .then(() => {
